@@ -80,6 +80,8 @@ class Ride(Printable):
 
 current_vehicle_id = 0
 
+
+
 class Vehicle(Printable):
 
     def __init__(self):
@@ -122,6 +124,28 @@ def get_best_ride_for_vehicle(vehicle):
             best_time_required = time_required
     return (best_ride, best_time_required)
 
+def preprocess(rides):
+    filtered = 0
+    threshold = 20
+    dist_threshold = 200
+    for ride in tqdm(rides):
+        # found_start = 0
+        # found_end = 0
+        # for other in rides:
+        #     if ride.id == other.id:
+        #         continue
+        #     if ride.start.calculate_distance(other.start) < dist_threshold or ride.start.calculate_distance(other.end) < dist_threshold:
+        #         found_start += 1
+        #     if ride.end.calculate_distance(other.start) < dist_threshold or ride.end.calculate_distance(other.end) < dist_threshold:
+        #         found_end += 1
+        #     if found_start >= threshold and found_end >= threshold:
+        #         break
+        if ride.start.y > 2222 or ride.end.y > 2222 or 6111 < ride.start.x or 6111 < ride.end.x or ride.start.x > 8333 or ride.end.x > 8333:
+        #if not (found_start >= threshold and found_end >= threshold):
+            ride.is_handled = True
+            filtered += 1
+    eprint("Filtered", filtered, "of", len(rides))
+
 if __name__ == '__main__':
     # Read line from std in
     line = sys.stdin.readline().split()
@@ -135,7 +159,7 @@ if __name__ == '__main__':
     for ride in range(0, config.rides):
         line = sys.stdin.readline().split()
         rides.append(Ride(line))
-
+    #preprocess(rides)
     #for ride in rides:
     #    print(ride)
 
