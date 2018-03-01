@@ -37,6 +37,12 @@ class Intersection(Printable):
         self.x = x
         self.y = y
         
+    def calculate_distance(self, other):
+        '''
+        |a − x| + |b − y|
+        '''
+        return abs(self.x - other.x) + abs(self.y - other.y)
+        
     def __str__(self):
         return '(' + str(self.x) + ',' + str(self.y) + ')'
         
@@ -58,6 +64,9 @@ class Ride(Printable):
         self.earliest_start      = int(line[4])
         self.latest_finish       = int(line[5])
         self.is_handled          = False
+        self.length              = self.start.calculate_distance(self.end)
+
+
 
 
 current_vehicle_id = 0
