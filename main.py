@@ -72,10 +72,11 @@ class Ride(Printable):
 current_vehicle_id = 0
 
 class Vehicle:
+
     def __init__(self):
         global current_vehicle_id
-        self.id = current_vehicle_id
         current_vehicle_id += 1
+        self.id = current_vehicle_id
         self.rides = []
         self.location = Intersection(int(0),int(0))
         self.currentTime = int(0)
@@ -88,17 +89,14 @@ if __name__ == '__main__':
     config = Config(line)
     rides  = []
 
-    #print(config)
-
 
     for ride in range(0, config.rides):
         line = sys.stdin.readline().split()
         rides.append(Ride(line))
 
-
-    vehicles = config.vehicles*[Vehicle()]
-
-
+    vehicles = []
+    for _ in range(config.vehicles):
+        vehicles.append(Vehicle())
 
     # Do shit with Vehciles
     file = open("output.txt", "w")
