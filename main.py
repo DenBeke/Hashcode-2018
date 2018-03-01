@@ -135,8 +135,6 @@ if __name__ == '__main__':
         vehicles.append(Vehicle())
 
     # Do shit with Vehciles
-    file = open("output.txt", "w")
-
     for vehicle in vehicles:
         line = str(len(vehicle.rides))
         for ride in vehicle.rides:
