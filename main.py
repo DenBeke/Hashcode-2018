@@ -57,40 +57,46 @@ class Ride(Printable):
         self.end                 = Intersection(int(line[2]), int(line[3]))
         self.earliest_start      = int(line[4])
         self.latest_finish       = int(line[5])
+        self.is_handled          = False
 
+
+current_vehicle_id = 0
 
 class Vehicle:
-    def __init__(self, id, rides):
-        self.id = id
-        self.rides = rides
+    def __init__(self):
+        global current_vehicle_id
+        self.id = current_vehicle_id
+        current_vehicle_id += 1
+        self.rides = []
+        self.location = Intersection(int(0),int(0))
+        self.currentTime = int(0)
 
-
-
-
-
-# Read line from std in
-line = sys.stdin.readline().split()
-
-config = Config(line)
-rides  = []
-
-print(config)
-
-
-for ride in range(0, config.rides):
+if __name__ == '__main__':
+    # Read line from std in
     line = sys.stdin.readline().split()
-    rides.append(Ride(line))
 
-for ride in rides:
-    print(ride)
 
-# Do shit with Vehciles
-file = open("output.txt", "w")
-vehicles = []
+    config = Config(line)
+    rides  = []
 
-for vehicle in vehicles:
-    line = str(vehicle.id)
-    for ride in vehicle.rides:
-        line += " " + str(ride)
+    #print(config)
 
-    file.write(line)
+
+    for ride in range(0, config.rides):
+        line = sys.stdin.readline().split()
+        rides.append(Ride(line))
+
+
+    vehicles = config.vehicles*[Vehicle()]
+
+
+
+    # Do shit with Vehciles
+    file = open("output.txt", "w")
+
+    for vehicle in vehicles:
+        line = str(vehicle.id)
+        for ride in vehicle.rides:
+            line += " " + str(ride)
+
+        print(line)
