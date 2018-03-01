@@ -103,7 +103,7 @@ if __name__ == '__main__':
     file = open("output.txt", "w")
 
     for vehicle in vehicles:
-        line = str(vehicle.id)
+        line = str(len(vehicle.rides))
         for ride in vehicle.rides:
             line += " " + str(ride)
 
