@@ -154,8 +154,10 @@ if __name__ == '__main__':
         if next_ride is None:
             break
         next_vehicle.currentTime += time
+
         next_vehicle.rides.append(next_ride)
         next_ride.is_handled = True
+        next_vehicle.location = next_ride.end
 
     for vehicle in vehicles:
         line = str(len(vehicle.rides))

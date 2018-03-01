@@ -6,5 +6,4 @@ do
     echo "Processing $name"
     python3 main.py < input/$name.in > output/$name.out&
 done
-
-while [ $(echo $(ps aux | grep python3) | wc -l) -gt 1 ]; do sleep 1; done
+while ps aux | grep python3 | grep -v grep |  wc -l ; do sleep 1; done
