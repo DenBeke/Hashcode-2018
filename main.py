@@ -57,6 +57,7 @@ class Ride(Printable):
         self.end                 = Intersection(int(line[2]), int(line[3]))
         self.earliest_start      = int(line[4])
         self.latest_finish       = int(line[5])
+        self.is_handled          = False
 
 if __name__ == '__main__':
     # Read line from std in
