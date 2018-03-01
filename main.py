@@ -1,5 +1,8 @@
 import sys
+from tqdm import tqdm
 
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
 
 class Printable:
     def __str__(self):
@@ -77,7 +80,7 @@ class Ride(Printable):
 
 current_vehicle_id = 0
 
-class Vehicle:
+class Vehicle(Printable):
 
     def __init__(self):
         global current_vehicle_id
@@ -101,6 +104,7 @@ def get_next_vehicle():
 def get_best_ride_for_vehicle(vehicle):
     closest_deadline = 9999999999
     best_ride = None
+    best_time_required = None
     for ride in rides:
         if ride.is_handled:
             continue
@@ -110,8 +114,9 @@ def get_best_ride_for_vehicle(vehicle):
         closeness = ride.latest_finish - (vehicle.currentTime + time_required)
         if closeness < closest_deadline:
             best_ride = ride
+            best_time_required = time_required
 
-    return best_ride
+    return (best_ride, best_time_required)
 
 if __name__ == '__main__':
     # Read line from std in
@@ -137,16 +142,19 @@ if __name__ == '__main__':
     # Do shit with Vehciles
     file = open("output.txt", "w")
 
+
+
+    for i in tqdm(range(len(rides))):
+        next_vehicle = get_next_vehicle()
+        (next_ride, time) = get_best_ride_for_vehicle(next_vehicle)
+        if next_ride is None:
+            break
+        next_vehicle.currentTime += time
+        next_vehicle.rides.append(next_ride)
+        next_ride.is_handled = True
+
     for vehicle in vehicles:
         line = str(len(vehicle.rides))
         for ride in vehicle.rides:
-            line += " " + str(ride)
-
+            line += " " + str(ride.id)
         print(line)
-
-
-
-    stop = False
-    while not stop:
-        next_vehicle = get_next_vehicle()
-        get_best_ride_for_vehicle(next_vehicle)
