@@ -1,4 +1,5 @@
 import sys
+import math
 from tqdm import tqdm
 
 def eprint(*args, **kwargs):
@@ -105,7 +106,7 @@ def get_next_vehicle():
 
 def get_best_ride_for_vehicle(vehicle):
     closest_deadline = 9999999999
-    best_score = 0
+    best_score = -9999999999
     best_ride = None
     best_time_required = None
     for ride in rides:
@@ -118,9 +119,12 @@ def get_best_ride_for_vehicle(vehicle):
         # if closeness < closest_deadline:
         #     best_ride = ride
         #     best_time_required = time_required
-        if ride.length > best_score:
+        score = ride.length - (max(ride.earliest_start - vehicle.currentTime - ride.start.calculate_distance(vehicle.location), 0))
+        if ride.earliest_start > vehicle.currentTime + ride.start.calculate_distance(vehicle.location):
+            score += config.on_time_start_bonus
+        if score > best_score:
             best_ride = ride
-            best_score = ride.length
+            best_score = score
             best_time_required = time_required
     return (best_ride, best_time_required)
 
