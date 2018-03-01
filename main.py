@@ -119,7 +119,7 @@ def get_best_ride_for_vehicle(vehicle):
         # if closeness < closest_deadline:
         #     best_ride = ride
         #     best_time_required = time_required
-        score = ride.length - (max(ride.earliest_start - vehicle.currentTime - ride.start.calculate_distance(vehicle.location), 0))
+        score = ride.length - (max(ride.start.calculate_distance(vehicle.location), 0))
         if ride.earliest_start > vehicle.currentTime + ride.start.calculate_distance(vehicle.location):
             score += config.on_time_start_bonus
         if score > best_score:
@@ -163,7 +163,7 @@ if __name__ == '__main__':
     for ride in range(0, config.rides):
         line = sys.stdin.readline().split()
         rides.append(Ride(line))
-    preprocess(rides)
+    #preprocess(rides)
     #for ride in rides:
     #    print(ride)
 
