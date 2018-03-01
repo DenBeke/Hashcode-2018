@@ -103,6 +103,7 @@ def get_next_vehicle():
 
 def get_best_ride_for_vehicle(vehicle):
     closest_deadline = 9999999999
+    best_score = 0
     best_ride = None
     best_time_required = None
     for ride in rides:
@@ -112,10 +113,13 @@ def get_best_ride_for_vehicle(vehicle):
         if not vehicle.currentTime + time_required < ride.latest_finish:
             continue
         closeness = ride.latest_finish - (vehicle.currentTime + time_required)
-        if closeness < closest_deadline:
+        # if closeness < closest_deadline:
+        #     best_ride = ride
+        #     best_time_required = time_required
+        if ride.length > best_score:
             best_ride = ride
+            best_score = ride.length
             best_time_required = time_required
-
     return (best_ride, best_time_required)
 
 if __name__ == '__main__':
