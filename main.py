@@ -96,14 +96,14 @@ if __name__ == '__main__':
     config = Config(line)
     rides  = []
 
-    print(config)
+    #print(config)
 
     for ride in range(0, config.rides):
         line = sys.stdin.readline().split()
         rides.append(Ride(line))
 
-    for ride in rides:
-        print(ride)
+    #for ride in rides:
+    #    print(ride)
 
     vehicles = []
     for _ in range(config.vehicles):
