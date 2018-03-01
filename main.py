@@ -59,6 +59,15 @@ class Ride(Printable):
         self.latest_finish       = int(line[5])
 
 
+class Vehicle:
+    def __init__(self, id, rides):
+        self.id = id
+        self.rides = rides
+
+
+
+
+
 # Read line from std in
 line = sys.stdin.readline().split()
 
@@ -74,3 +83,14 @@ for ride in range(0, config.rides):
 
 for ride in rides:
     print(ride)
+
+# Do shit with Vehciles
+file = open("output.txt", "w")
+vehicles = []
+
+for vehicle in vehicles:
+    line = str(vehicle.id)
+    for ride in vehicle.rides:
+        line += " " + str(ride)
+
+    file.write(line)
