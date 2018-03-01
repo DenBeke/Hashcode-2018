@@ -109,7 +109,7 @@ def get_best_ride_for_vehicle(vehicle):
     for ride in rides:
         if ride.is_handled:
             continue
-        time_required = ride.start.calculate_distance(vehicle.location) + ride.length
+        time_required = max(ride.earliest_start - vehicle.currentTime - ride.start.calculate_distance(vehicle.location), 0) + ride.start.calculate_distance(vehicle.location) + ride.length
         if not vehicle.currentTime + time_required < ride.latest_finish:
             continue
         closeness = ride.latest_finish - (vehicle.currentTime + time_required)
@@ -150,10 +150,14 @@ if __name__ == '__main__':
 
     for i in tqdm(range(len(rides))):
         next_vehicle = get_next_vehicle()
+        
+        #print(next_vehicle.currentTime)
+        
         (next_ride, time) = get_best_ride_for_vehicle(next_vehicle)
         if next_ride is None:
             break
         next_vehicle.currentTime += time
+        
 
         next_vehicle.rides.append(next_ride)
         next_ride.is_handled = True
