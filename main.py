@@ -47,6 +47,8 @@ class Intersection(Printable):
         return '(' + str(self.x) + ',' + str(self.y) + ')'
         
 
+current_ride_id = 0
+
 class Ride(Printable):
     def __init__(self, line):
         '''
@@ -59,6 +61,10 @@ class Ride(Printable):
         - f–thelatestfinish(0≤f ≤T), (f ≥s+|x−a|+|y−b|)
             note that f can be equal to T – this makes the latest finish equal to the end of the simulation
         '''
+        global current_ride_id
+        self.id = current_ride_id
+        current_ride_id += 1
+        
         self.start               = Intersection(int(line[0]), int(line[1]))
         self.end                 = Intersection(int(line[2]), int(line[3]))
         self.earliest_start      = int(line[4])
@@ -75,8 +81,9 @@ class Vehicle:
 
     def __init__(self):
         global current_vehicle_id
-        current_vehicle_id += 1
         self.id = current_vehicle_id
+        current_vehicle_id += 1
+        
         self.rides = []
         self.location = Intersection(int(0),int(0))
         self.currentTime = int(0)
@@ -114,10 +121,14 @@ if __name__ == '__main__':
     config = Config(line)
     rides  = []
 
+    #print(config)
 
     for ride in range(0, config.rides):
         line = sys.stdin.readline().split()
         rides.append(Ride(line))
+
+    #for ride in rides:
+    #    print(ride)
 
     vehicles = []
     for _ in range(config.vehicles):
@@ -127,7 +138,7 @@ if __name__ == '__main__':
     file = open("output.txt", "w")
 
     for vehicle in vehicles:
-        line = str(vehicle.id)
+        line = str(len(vehicle.rides))
         for ride in vehicle.rides:
             line += " " + str(ride)
 
