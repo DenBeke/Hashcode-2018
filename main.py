@@ -81,6 +81,31 @@ class Vehicle:
         self.location = Intersection(int(0),int(0))
         self.currentTime = int(0)
 
+def get_next_vehicle():
+    best_vehicle_id = None
+    lowest_time = 99999999999
+    for vehicle in vehicles:
+        if vehicle.currentTime < lowest_time:
+            best_vehicle_id = vehicle.id
+            lowest_time = vehicle.currentTime
+
+    return vehicles[best_vehicle_id]
+
+def get_best_ride_for_vehicle(vehicle):
+    closest_deadline = 9999999999
+    best_ride = None
+    for ride in rides:
+        if ride.is_handled:
+            continue
+        time_required = ride.start.calculate_distance(vehicle.location) + ride.length
+        if not vehicle.currentTime + time_required < ride.latest_finish:
+            continue
+        closeness = ride.latest_finish - (vehicle.currentTime + time_required)
+        if closeness < closest_deadline:
+            best_ride = ride
+
+    return best_ride
+
 if __name__ == '__main__':
     # Read line from std in
     line = sys.stdin.readline().split()
@@ -107,3 +132,10 @@ if __name__ == '__main__':
             line += " " + str(ride)
 
         print(line)
+
+
+
+    stop = False
+    while not stop:
+        next_vehicle = get_next_vehicle()
+        get_best_ride_for_vehicle(next_vehicle)
