@@ -58,19 +58,19 @@ class Ride(Printable):
         self.earliest_start      = int(line[4])
         self.latest_finish       = int(line[5])
 
-
-# Read line from std in
-line = sys.stdin.readline().split()
-
-config = Config(line)
-rides  = []
-
-print(config)
-
-
-for ride in range(0, config.rides):
+if __name__ == '__main__':
+    # Read line from std in
     line = sys.stdin.readline().split()
-    rides.append(Ride(line))
 
-for ride in rides:
-    print(ride)
+    config = Config(line)
+    rides  = []
+
+    print(config)
+
+
+    for ride in range(0, config.rides):
+        line = sys.stdin.readline().split()
+        rides.append(Ride(line))
+
+    for ride in rides:
+        print(ride)
