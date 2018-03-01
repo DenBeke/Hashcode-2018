@@ -163,7 +163,7 @@ if __name__ == '__main__':
     for ride in range(0, config.rides):
         line = sys.stdin.readline().split()
         rides.append(Ride(line))
-    #preprocess(rides)
+    preprocess(rides)
     #for ride in rides:
     #    print(ride)
 
